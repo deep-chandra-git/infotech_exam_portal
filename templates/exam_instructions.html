@@ -1,0 +1,319 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Exam Instructions | PaulTech Exam Portal</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+<div class="container">
+
+<a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="{% url 'dashboard' %}">
+<img src="{% static 'images/logo.png' %}" alt="PaulTech Exam Portal" height="35" class="d-inline-block align-middle">
+<span class="text-primary">Exam Portal</span>
+</a>
+
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+<i class="bi bi-list fs-2"></i>
+</button>
+
+<div class="collapse navbar-collapse" id="navbarMain">
+
+<ul class="navbar-nav ms-auto align-items-center gap-3">
+
+<li class="nav-item">
+<a class="nav-link active" href="{% url 'dashboard' %}">
+<i class="bi bi-speedometer2"></i> Dashboard
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="{% url 'result' %}">
+<i class="bi bi-bar-chart"></i> Results
+</a>
+</li>
+
+<li class="nav-item dropdown">
+
+<a class="nav-link dropdown-toggle d-flex align-items-center gap-2" data-bs-toggle="dropdown">
+
+<div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
+     style="width:35px;height:35px">
+
+{{ student.username|first|upper }}
+
+</div>
+
+<span>{{ student.username }}</span>
+
+</a>
+
+<ul class="dropdown-menu dropdown-menu-end shadow border-0">
+
+<li>
+<a class="dropdown-item text-danger" href="{% url 'logout' %}">
+<i class="bi bi-box-arrow-right me-2"></i> Logout
+</a>
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</div>
+</div>
+</nav>
+
+<!-- MAIN -->
+<main class="py-5">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+
+                <!-- HEADER -->
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold">
+                        <i class="bi bi-info-circle-fill text-primary me-2"></i>
+                        Exam Instructions
+                    </h2>
+
+                    <p class="text-muted">
+                        Please read all instructions carefully before starting your exam.
+                    </p>
+                </div>
+
+                <!-- EXAM CARD -->
+                <div class="card border-0 shadow-lg rounded-4">
+
+                    <div class="card-header bg-primary text-white py-3">
+                        <h4 class="mb-0 fw-bold">
+                            Your Exam Details
+                        </h4>
+                    </div>
+
+                    <div class="card-body p-4">
+
+                        <h5 class="mb-3">
+                            Domain:
+                            <span class="text-primary">
+                                {{ request.session.domain }}
+                            </span>
+                        </h5>
+
+                        <div class="alert alert-warning">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            Read instructions carefully before starting. Once started, timer cannot be paused.
+                        </div>
+
+                        <!-- DETAILS -->
+                        <div class="mb-4">
+
+                            <ul class="list-group">
+
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Total Duration</span>
+                                    <strong>60 Minutes</strong>
+                                </li>
+
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Total Questions</span>
+                                    <strong>50</strong>
+                                </li>
+
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Mode</span>
+                                    <strong>MCQ Based</strong>
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                        <!-- INSTRUCTIONS -->
+                        <div class="mb-4">
+
+                            <h5 class="fw-semibold mb-2">
+                                <i class="bi bi-list-check text-primary me-2"></i>
+                                Instructions
+                            </h5>
+
+                            <ul>
+                                <li>Each question carries equal marks.</li>
+                                <li>No negative marking.</li>
+                                <li>Do not refresh the page during exam.</li>
+                                <li>Ensure stable internet connection.</li>
+                                <li>Answer all questions before submission.</li>
+                                <li>Exam will auto-submit when timer reaches zero.</li>
+                                <li>Once submitted, you cannot retake the exam.</li>
+                            </ul>
+
+                        </div>
+
+                        <!-- TERMS AND CONDITIONS SECTION -->
+                        <div class="terms-section mb-4">
+                            <h5 class="fw-semibold mb-3">
+                                <i class="bi bi-file-text-fill text-primary me-2"></i>
+                                Terms and Conditions
+                            </h5>
+                            
+                            <div class="terms-text-box mb-3">
+                                <p class="small text-muted mb-2"><strong>Please read the following terms carefully:</strong></p>
+                                <ul class="small text-muted">
+                                    <li>I confirm that I am the registered student and will not share my login credentials.</li>
+                                    <li>I will not cheat, plagiarize, or use any unfair means during the exam.</li>
+                                    <li>I will not copy, reproduce, or share any exam questions or answers.</li>
+                                    <li>I understand that any violation may result in disqualification.</li>
+                                    <li>I will not use any external resources, books, or devices during the exam.</li>
+                                    <li>I understand that the exam will be auto-submitted after the time limit.</li>
+                                    <li>I agree that the decision of the exam administrator is final.</li>
+                                </ul>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="agreeTermsCheckbox">
+                                <label class="form-check-label" for="agreeTermsCheckbox">
+                                    I have read and agree to the Terms and Conditions.
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- BUTTONS -->
+                        <div class="d-flex justify-content-between">
+
+                            <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Back
+                            </a>
+
+                            <button type="button" class="btn btn-primary px-4" id="startExamBtn" disabled>
+                                Start Exam <i class="bi bi-arrow-right"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- Footer - DARK GRADIENT -->
+<footer class="footer mt-5 pt-5 pb-3">
+
+<div class="container">
+
+<div class="row g-4">
+
+<div class="col-lg-5 col-md-6">
+
+<div class="footer-brand d-flex align-items-center gap-2">
+<img src="{% static 'images/logo.png' %}" alt="PaulTech Exam Portal" height="35">
+<span class="fw-bold fs-4 text-primary">Exam Portal</span>
+</div>
+
+<p class="text-muted mt-3 mb-0">
+Empowering the next generation of tech professionals through certification exams.
+</p>
+
+</div>
+
+<div class="col-lg-3 col-md-6">
+
+<h6 class="fw-bold mb-3">Quick Links</h6>
+
+<ul class="footer-links">
+
+<li>
+<a href="{% url 'dashboard' %}">
+<i class="bi bi-chevron-right"></i> Dashboard
+</a>
+</li>
+
+<li>
+<a href="{% url 'result' %}">
+<i class="bi bi-chevron-right"></i> Results
+</a>
+</li>
+
+</ul>
+
+</div>
+
+<div class="col-lg-4 col-md-12">
+
+<h6 class="fw-bold mb-3">Contact Us</h6>
+
+<ul class="footer-links">
+
+<li>
+<a href="https://paultechsoftwareservices.com/" target="_blank">
+<i class="bi bi-globe"></i>
+paultechsoftwareservices.com
+</a>
+</li>
+
+<li>
+<a href="#">
+<i class="bi bi-geo-alt"></i>
+34 First Floor Pacific Height Building Aambagan Sakchi Jamshedpur
+</a>
+</li>
+
+<li>
+<a href="tel:+917209986943">
+<i class="bi bi-telephone"></i>
++91 7209986943
+</a>
+</li>
+
+<li>
+<a href="mailto:hr@paultechsoftwareservices.com">
+<i class="bi bi-envelope"></i>
+hr@paultechsoftwareservices.com
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<hr class="my-4">
+
+<div class="row">
+<div class="col text-center">
+
+<p class="mb-0 small text-muted">
+All Rights Reserved © 2019-2026 PaulTech Software Services Pvt Ltd. Jamshedpur
+</p>
+
+</div>
+</div>
+
+</div>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Take Exam | PaulTech Exam Portal</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg sticky-top bg-white shadow-sm">
+<div class="container">
+<a class="navbar-brand fw-bold" href="{% url 'dashboard' %}">
+<i class="bi bi-mortarboard-fill text-primary"></i>
+PaulTech Exam Portal
+</a>
+<div class="ms-auto d-flex align-items-center gap-3">
+<div class="timer-box">
+<i class="bi bi-hourglass-top"></i>
+<span id="timerDisplay">60:00</span>
+</div>
+<button type="button" class="btn btn-danger rounded-pill" id="submitExamBtn">
+Submit Exam
+</button>
+</div>
+</div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="py-4">
+<div class="container">
+
+<!-- HEADER -->
+<div class="text-center mb-4">
+<h3 class="fw-bold">{{ request.session.domain }} Certification Exam</h3>
+<p class="text-muted">Answer each question carefully. Use Next / Previous to navigate.</p>
+</div>
+
+<!-- PROGRESS -->
+<div class="question-progress mb-4">
+<div class="d-flex justify-content-between align-items-center mb-2">
+<span class="text-muted">Progress</span>
+<span class="fw-semibold" id="questionCounter">Question 1 of {{ questions|length }}</span>
+</div>
+<div class="progress">
+<div class="progress-bar bg-primary" id="progressBar" style="width: 0%;"></div>
+</div>
+</div>
+
+<!-- FORM -->
+<form id="examForm" method="POST" action="{% url 'submit_exam' %}" autocomplete="off">
+{% csrf_token %}
+
+<!-- QUESTIONS WRAPPER -->
+<div id="questionsWrapper">
+{% for question in questions %}
+<div class="card mb-4 question-card" data-question="{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
+<div class="card-body">
+<h5 class="fw-semibold mb-3">Q{{ forloop.counter }}. {{ question.question_text }}</h5>
+<div class="options-group">
+<label class="option-item">
+<input type="radio" name="question_{{ question.id }}" value="A" autocomplete="off">
+<span>A. {{ question.option_a }}</span>
+</label>
+<label class="option-item">
+<input type="radio" name="question_{{ question.id }}" value="B" autocomplete="off">
+<span>B. {{ question.option_b }}</span>
+</label>
+<label class="option-item">
+<input type="radio" name="question_{{ question.id }}" value="C" autocomplete="off">
+<span>C. {{ question.option_c }}</span>
+</label>
+<label class="option-item">
+<input type="radio" name="question_{{ question.id }}" value="D" autocomplete="off">
+<span>D. {{ question.option_d }}</span>
+</label>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+
+<!-- NAVIGATION BUTTONS -->
+<div class="d-flex justify-content-between mt-4">
+<button type="button" class="btn btn-outline-secondary rounded-pill px-4" id="prevBtn" disabled>
+<i class="bi bi-chevron-left"></i> Previous
+</button>
+<button type="button" class="btn btn-primary rounded-pill px-4" id="nextBtn">
+Next <i class="bi bi-chevron-right"></i>
+</button>
+</div>
+
+<!-- QUESTION NAVIGATOR -->
+<div class="question-navigator mt-4 p-3 bg-light rounded-3">
+<div class="d-flex justify-content-between align-items-center mb-3">
+<span class="fw-semibold"><i class="bi bi-grid-3x3-gap-fill me-2"></i>Question Navigator</span>
+<span class="small text-muted" id="answeredCount">0 Answered</span>
+</div>
+<div class="d-flex flex-wrap gap-2" id="questionButtons">
+{% for question in questions %}
+<button type="button" class="btn btn-outline-primary btn-sm question-nav-btn" data-question="{{ forloop.counter }}">
+{{ forloop.counter }}
+</button>
+{% endfor %}
+</div>
+</div>
+
+</form>
+</div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

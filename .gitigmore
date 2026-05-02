@@ -1,0 +1,42 @@
+# Python
+
+**pycache**/
+*.py[cod]
+*.so
+
+# Virtual environments
+
+venv/
+env/
+ENV/
+
+# Django
+
+db.sqlite3
+*.log
+media/
+staticfiles/
+
+# Environment variables
+
+.env
+
+# Editor/IDE
+
+.vscode/
+.idea/
+
+# OS files
+
+.DS_Store
+*.swp
+
+# Build / packaging
+
+build/
+dist/
+*.egg-info/
+
+# Gunicorn
+
+gunicorn.log
